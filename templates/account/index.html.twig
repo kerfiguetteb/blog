@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    <h1>Bonjour {{app.user.nom}} {{app.user.prenom}}</h1>
+    {% for post in posts %}
+    <div class="row d-flex justify-content-center r">
+    <div class="col-md-8 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <h6 class="card-title">{{post.introduction}}</h6>
+                <p class="card-text">{{post.content}}</p>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
