@@ -20,4 +20,10 @@ class AccountController extends AbstractController
             $this->redirectToRoute('app_login');   
         }
     }
+
+    #[Route('/delete-post', name: 'app_delete_post')]
+    public function deletePost(PostRepository $repos){
+        return $this->redirectToRoute('app_account');
+        $repos->findByVisibilite(true);
+    }
 }
