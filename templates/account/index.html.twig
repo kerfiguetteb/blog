@@ -6,7 +6,7 @@
 {% if app.user %}
     <h1>Bonjour {{app.user.nom}} {{app.user.prenom}}</h1>
     {% for post in posts %}
-    {% if post.visibilite is same as (false) %}
+    {% if post.visibilite %}
     <div class="row d-flex justify-content-center r">
     <div class="col-md-8 mb-3">
         <div class="card text-center">
@@ -15,7 +15,7 @@
                 <h6 class="card-title">{{post.introduction}}</h6>
                 <p class="card-text">{{post.content}}</p>
             </div>
-            <a href="{{path('app_delete_post')}}" class='btn btn-danger'>Supprimer</a>
+            <a href="{{path('app_delete_post', {'id': post.id})}}" class='btn btn-danger'>Supprimer</a>
             </div>
         </div>
     </div>
