@@ -3,5 +3,22 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+<div class="container mt-5">
+    {% for post in posts %}
+    {% if post.visibilite %}
+    <div class="row d-flex justify-content-center r">
+    <div class="col-md-8 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <h6 class="card-title">{{post.introduction}}</h6>
+                <p class="card-text">{{post.content}}</p>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
 
 {% endblock %}
