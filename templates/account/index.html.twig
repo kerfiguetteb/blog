@@ -5,6 +5,9 @@
 {% block body %}
 {% if app.user %}
     <h1>Bonjour {{app.user.nom}} {{app.user.prenom}}</h1>
+    <div class="text-end m-3">
+        <a href="" class="btn btn-primary">+ ajouter un post</a>
+    </div>
     {% for post in posts %}
     {% if post.visibilite %}
     <div class="row d-flex justify-content-center r">
