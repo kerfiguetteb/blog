@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('profile')]
 class PostController extends AbstractController
@@ -20,7 +21,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/edit-post/{id}', name: 'app_edit_post', methods: ['GET', 'POST'])]
-    public function editPost($id,Request $request): Response
+    public function edit($id,Request $request): Response
     {
         $post=$this->repoPost->find($id);
         
@@ -35,6 +36,29 @@ class PostController extends AbstractController
 
         return $this->renderForm('post/edit.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/new', name:'app_add_post', methods:['GET','POST'])]
+    public function add(Request $request): Response
+    {
+        $post = new Post();
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post->setVisibilite(true);
+            $post->setUser($this->getUser());
+            $this->repoPost->save($post, true);
+
+
+            return $this->redirectToRoute('app_account');
+        }
+
+        return $this->render('post/add.html.twig',[
+            'post'=>$post,
+            'form'=>$form->createView()
         ]);
     }
 

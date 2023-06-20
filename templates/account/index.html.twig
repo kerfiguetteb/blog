@@ -6,7 +6,7 @@
 {% if app.user %}
     <h1>Bonjour {{app.user.nom}} {{app.user.prenom}}</h1>
     <div class="text-end m-3">
-        <a href="" class="btn btn-primary">+ ajouter un post</a>
+        <a href="{{path('app_add_post')}}" class="btn btn-primary">+ ajouter un post</a>
     </div>
     {% for post in posts %}
     {% if post.visibilite %}
