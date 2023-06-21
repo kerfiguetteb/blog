@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,14 @@ class Post
 
     #[ORM\Column]
     private ?bool $visibilite = null;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: IsLike::class)]
+    private Collection $isLikes;
+
+    public function __construct()
+    {
+        $this->isLikes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +101,36 @@ class Post
     public function setVisibilite(bool $visibilite): static
     {
         $this->visibilite = $visibilite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IsLike>
+     */
+    public function getIsLikes(): Collection
+    {
+        return $this->isLikes;
+    }
+
+    public function addIsLike(IsLike $isLike): static
+    {
+        if (!$this->isLikes->contains($isLike)) {
+            $this->isLikes->add($isLike);
+            $isLike->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIsLike(IsLike $isLike): static
+    {
+        if ($this->isLikes->removeElement($isLike)) {
+            // set the owning side to null (unless already changed)
+            if ($isLike->getPost() === $this) {
+                $isLike->setPost(null);
+            }
+        }
 
         return $this;
     }
