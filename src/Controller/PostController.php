@@ -24,6 +24,10 @@ class PostController extends AbstractController
     public function edit($id,Request $request): Response
     {
         $post=$this->repoPost->find($id);
+
+        if ($post->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('app_account');
+        }
         
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
