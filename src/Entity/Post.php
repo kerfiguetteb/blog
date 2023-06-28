@@ -32,13 +32,14 @@ class Post
     #[ORM\Column]
     private ?bool $visibilite = null;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: IsLike::class)]
-    private Collection $isLikes;
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Like::class)]
+    private Collection $likes;
 
     public function __construct()
     {
-        $this->isLikes = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -106,33 +107,39 @@ class Post
     }
 
     /**
-     * @return Collection<int, IsLike>
+     * @return Collection<int, Like>
      */
-    public function getIsLikes(): Collection
+    public function getLikes(): Collection
     {
-        return $this->isLikes;
+        return $this->likes;
     }
 
-    public function addIsLike(IsLike $isLike): static
+    public function addLike(Like $like): static
     {
-        if (!$this->isLikes->contains($isLike)) {
-            $this->isLikes->add($isLike);
-            $isLike->setPost($this);
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setPost($this);
         }
 
         return $this;
     }
 
-    public function removeIsLike(IsLike $isLike): static
+    public function removeLike(Like $like): static
     {
-        if ($this->isLikes->removeElement($isLike)) {
+        if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
-            if ($isLike->getPost() === $this) {
-                $isLike->setPost(null);
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
             }
         }
 
         return $this;
     }
+
+    public function isLike(User $user){
+        if($user === $this->getUser()) return true;
+        return false;
+    }
+
 
 }
