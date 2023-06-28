@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Like;
 use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
@@ -39,6 +40,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
         $this->manager = $manager;
         $this->loadUser();
         $this->loadPost();
+        $this->loadLike();
     }
 
     public function loadUser() :void
@@ -101,5 +103,24 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
         }
 
         $this->manager->flush();
+    }
+
+    public function loadLike(){
+        $repository = $this->manager->getRepository(User::class);
+        $users = $repository->findAll();
+
+        $repository = $this->manager->getRepository(Post::class);
+        $posts = $repository->findAll();
+
+        for ($i=0; $i < 150; $i++) { 
+            $like = new Like();
+            $like->getUser($users[random_int(0,count($users)-1)]);
+            $like->setPost($posts[random_int(0,count($posts)-1)]);
+            $this->manager->persist($like);
+
+        }
+        $this->manager->flush();
+
+
     }
 }
