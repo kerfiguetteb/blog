@@ -16,6 +16,12 @@
                 <p class="card-text">{{post.content}}</p>
                  <a href="{{ path('app_edit_post', {'id': post.id}) }}" class='btn btn-info'>Modifier</a>
                  <a href="{{path('app_delete_post', {'id': post.id})}}" class='btn btn-danger'>Supprimer</a>
+                 {% if app.user and post.isLike(app.user) %} 
+                 <a href="{{path('app_like', {'id':post.id})}}" class='btn btn-danger'>DeLiker</a>
+                 {% else %}
+                 <a href="{{path('app_like', {'id':post.id})}}" class='btn btn-primary'>Liker</a>
+                 {% endif %}
+                 
             </div>
             </div>
         </div>

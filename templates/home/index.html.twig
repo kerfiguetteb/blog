@@ -14,6 +14,12 @@
                 <h6 class="card-title">{{post.introduction}}</h6>
                 <p class="card-text">{{post.content}}</p>
             </div>
+            {% if app.user and post.isLike(app.user) %} 
+                 <a href="{{path('app_like', {'id':post.id})}}"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                 {% else %}
+                 <a href="{{path('app_like', {'id':post.id})}}"><i class="fa fa-thumbs-up"></i></a>
+                 {% endif %}
+                 
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\LikeRepository;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     private $repoPost;
+    private $repoLike;
 
-    public function __construct(PostRepository $postRepository,)
+    public function __construct(
+     PostRepository $postRepository,
+     LikeRepository $likeRepository
+     )
     {
         $this->repoPost = $postRepository;
+        $this->repoLike = $likeRepository;
     }
 
     #[Route('/edit-post/{id}', name: 'app_edit_post', methods: ['GET', 'POST'])]
@@ -73,6 +79,23 @@ class PostController extends AbstractController
         $post->setVisibilite(false);
         $this->repoPost->save($post, true);
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);  
+    }
+
+    #[Route('post/{id}/likes', name: 'app_like')]
+    public function isLike($id){
+        $post = $this->repoPost->find($id);
+        $like = $this->repoLike->findOneBy([
+            'post'=>$post,
+            'user'=> $this->getUser()
+        ]);
+        dd($like);
+        // if ($post->isLike($this->getUser())) {
+
+        //     $this->repoLike->remove($like, true);
+        //     return $this->json(['code'=> 200,'message'=>'Like supprimer']);
+        // }
+        return $this->json(['code'=> 200,'message'=>'Ça marche bien']);
+
     }
 
 }

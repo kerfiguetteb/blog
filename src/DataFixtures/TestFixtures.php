@@ -114,7 +114,7 @@ class TestFixtures extends Fixture implements FixtureGroupInterface
 
         for ($i=0; $i < 150; $i++) { 
             $like = new Like();
-            $like->getUser($users[random_int(0,count($users)-1)]);
+            $like->setUser($users[random_int(0,count($users)-1)]);
             $like->setPost($posts[random_int(0,count($posts)-1)]);
             $this->manager->persist($like);
 

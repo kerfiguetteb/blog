@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -136,7 +137,8 @@ class Post
         return $this;
     }
 
-    public function isLike(User $user){
+    public function isLike(User $user): bool
+    {
         if($user === $this->getUser()) return true;
         return false;
     }
