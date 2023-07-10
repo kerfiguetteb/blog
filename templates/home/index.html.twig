@@ -15,9 +15,10 @@
                 <p class="card-text">{{post.content}}</p>
             </div>
             {% if app.user and post.isLike(app.user) %} 
-                 <a href="{{path('app_like', {'id':post.id})}}"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                 <a href="{{path('app_like', {'id':post.id})}}"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
                  {% else %}
-                 <a href="{{path('app_like', {'id':post.id})}}"><i class="fa fa-thumbs-up"></i></a>
+                 <a href="{{path('app_like', {'id':post.id})}}"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+</a>
                  {% endif %}
                  
             </div>
